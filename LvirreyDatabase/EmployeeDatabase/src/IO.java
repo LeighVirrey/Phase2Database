@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -45,8 +46,8 @@ public class IO {
     public void createEmployee(int id, String firstName, String lastName, int hireYear){
         if(id != 0 && !firstName.isEmpty() && !lastName.isEmpty() && hireYear > 1000 || hireYear > Year.now().getValue()){
             try {
-                File myObj = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
-                if (!myObj.createNewFile()) {
+                File file = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
+                if (!file.createNewFile()) {
                     System.out.println("ID has been taken");
                 }
             } catch (IOException e) {
@@ -71,6 +72,20 @@ public class IO {
         }else{
             System.out.println("Error occured, file might not exist");
         }
+    }
+    public List<String> findEmployee(int id){
+        File file = new File ("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
+        List<String> employee = new ArrayList<>();
+        try {
+            Scanner read = new Scanner(file);
+            while (read.hasNextLine()) {
+                String data = read.nextLine();
+                employee.add(data);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return employee;
     }
 }
 

@@ -31,9 +31,19 @@ public class start {
                 deleteEmployee();
                 break;
             case 6:
+                findEmployee();
+                break;
+            case 7:
                 System.out.println("bye");
                 break;
         }
+    }
+    public static void findEmployee(){
+        int id = ui.findID();
+        IO find = new IO();
+        List<String> employee = find.findEmployee(id);
+        System.out.println(employee);
+        run();
     }
     public static void createEmployee(){
         List<String> createList = ui.createList();

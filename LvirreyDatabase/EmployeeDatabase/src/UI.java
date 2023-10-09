@@ -22,7 +22,8 @@ public class UI {
                 3. Create an Employee to /long/
                 4. Update an Employee from /long/
                 5. Delete an Employee from /long/
-                6. Exit
+                6. Find an Employee by ID
+                7. Exit
                 Enter a number corresponding to the command
                 """);
     }
