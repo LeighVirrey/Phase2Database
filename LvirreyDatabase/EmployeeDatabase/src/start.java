@@ -42,7 +42,7 @@ public class start {
         int id = ui.findID();
         IO find = new IO();
         List<String> employee = find.findEmployee(id);
-        System.out.println(employee);
+        System.out.println(employee);//fix later?
         run();
     }
     public static void createEmployee(){
