@@ -11,8 +11,8 @@ import java.util.List;
  */
 
 public class start {
+    public static UI ui = new UI();
     public static void run() {
-        UI ui = new UI();
         int menuOptions = ui.Menu();
         switch (menuOptions){
             case 1:
@@ -22,13 +22,38 @@ public class start {
                 structured();
                 break;
             case 3:
+                createEmployee();
+                break;
+            case 4:
+                updateEmployee();
+                break;
+            case 5:
+                deleteEmployee();
+                break;
+            case 6:
+                System.out.println("bye");
                 break;
         }
+    }
+    public static void createEmployee(){
+        List<String> createList = ui.createList();
+        IO employee = new IO();
+        employee.createEmployee(Integer.parseInt(createList.get(0)), createList.get(1), createList.get(2), Integer.parseInt(createList.get(3)));
+        run();
+    }
+    public static void updateEmployee(){
+        //for this one, a findID() method is in the UI, use that to get the id and then run it through IO
+    }
+    public static void deleteEmployee(){
+        int id = ui.findID();
+        IO delete = new IO();
+        delete.deleteEmployee(id);
+        run();
     }
     public static void unstructured(){
         List<String> employeeData = getEmployeeData();
         for (String employeeInfo: employeeData
-             ) {
+        ) {
             System.out.println(employeeInfo);
         }
         run();
@@ -38,7 +63,7 @@ public class start {
         Employees employees = null;
         List<String> employeeList = new ArrayList<>();
         for (String employee: employeeData
-             ) {
+        ) {
             String[] structuredEmployee = structuredEmployee(employee);
             employees = new Employees(Integer.parseInt(structuredEmployee[0]),structuredEmployee[1],structuredEmployee[2],Integer.parseInt(structuredEmployee[3]));
             employeeList.add(Arrays.toString(employees.employeeInfo()));
