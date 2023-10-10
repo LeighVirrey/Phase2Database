@@ -73,6 +73,40 @@ public class IO {
             System.out.println("Error occured, file might not exist");
         }
     }
+
+    public void updateEmployeeData(int id, List<String> updatedData) {
+        File file = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
+
+        try (FileWriter writer = new FileWriter(file)) {
+            for (String data : updatedData) {
+                writer.write(data + System.lineSeparator()); // Write each line with a line separator
+            }
+            System.out.println("Employee data for ID " + id + " updated successfully.");
+        } catch (IOException e) {
+            System.out.println("Error updating employee data for ID " + id + ": " + e.getMessage());
+        }
+    }
+
+    public List<String> updateEmployeeInfo() {
+        List<String> updatedData = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter updated ID: ");
+        updatedData.add(scanner.nextLine());
+
+        System.out.print("Enter updated first name: ");
+        updatedData.add(scanner.nextLine());
+
+        System.out.print("Enter updated last name: ");
+        updatedData.add(scanner.nextLine());
+
+        System.out.print("Enter updated hire year: ");
+        updatedData.add(scanner.nextLine());
+
+        return updatedData;
+    }
+
     public List<String> findEmployee(int id){
         File file = new File ("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
         List<String> employee = new ArrayList<>();

@@ -52,7 +52,30 @@ public class start {
         run();
     }
     public static void updateEmployee(){
-        //for this one, a findID() method is in the UI, use that to get the id and then run it through IO
+        int id  = ui.findID();
+        IO io = new IO();
+        List<String> employeeData = io.findEmployee(id);
+
+        if (!employeeData.isEmpty()) {
+            System.out.println("Current Employee Data: ");
+            for (String data : employeeData) {
+                System.out.println(data);
+            }
+
+
+            List<String> updatedEmployeeData = io.updateEmployeeInfo();
+
+
+            employeeData.clear();
+            employeeData.addAll(updatedEmployeeData);
+
+
+            io.updateEmployeeData(id, employeeData);
+
+            System.out.println("Employee with ID " + id + " updated successfully.");
+        } else {
+            System.out.println("Employee with ID " + id + " not found.");
+        }
     }
     public static void deleteEmployee(){
         int id = ui.findID();
