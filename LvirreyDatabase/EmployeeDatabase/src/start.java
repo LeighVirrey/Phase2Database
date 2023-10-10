@@ -76,6 +76,7 @@ public class start {
         } else {
             System.out.println("Employee with ID " + id + " not found.");
         }
+        run();
     }
     public static void deleteEmployee(){
         int id = ui.findID();

@@ -78,8 +78,15 @@ public class IO {
         File file = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
 
         try (FileWriter writer = new FileWriter(file)) {
+            int index = 0;
             for (String data : updatedData) {
-                writer.write(data + System.lineSeparator()); // Write each line with a line separator
+                if(index != 3){
+                    writer.write(data + ", "); // Write each line with a line separator
+                    index++;
+                }else{
+                    writer.write(data);
+                }
+
             }
             System.out.println("Employee data for ID " + id + " updated successfully.");
         } catch (IOException e) {
