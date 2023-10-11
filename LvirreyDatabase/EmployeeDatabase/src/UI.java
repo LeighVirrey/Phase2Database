@@ -30,6 +30,7 @@ public class UI {
                 11 Find an employee by ID (Serialized)
                 12. Find an employee by Last Name (Serialized)
                 13. Find an employee by Last Name (normal)
+                14. Exit
                 Enter a number corresponding to the command
                 """);
     }

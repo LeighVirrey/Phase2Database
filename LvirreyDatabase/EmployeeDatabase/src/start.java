@@ -45,16 +45,19 @@ public class start {
                 //find id by hash
                 break;
             case 10:
-                //find lastname by hash
+                //find all users with the same lastname by hash
                 break;
             case 11:
                 //find id by serialized
                 break;
             case 12:
-                //find last name by serialized
+                //find all users with the same last name by serialized
                 break;
             case 13:
                 //find lastname by normal means
+                break;
+            case 14:
+                System.out.println("bye");
                 break;
         }
     }
