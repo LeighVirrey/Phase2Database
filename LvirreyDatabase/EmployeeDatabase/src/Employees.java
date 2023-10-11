@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * @author lvirrey
  * @createdOn 10/4/2023 at 4:12 PM
@@ -5,7 +7,7 @@
  * @packageName PACKAGE_NAME;
  */
 
-public class Employees {
+public class Employees implements Serializable {
     private int id;
     private String firstName;
     private String lastName;

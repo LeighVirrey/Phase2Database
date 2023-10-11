@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.Objects.hash;
+
 /**
  * @author lvirrey
  * @createdOn 10/4/2023 at 6:17 PM
@@ -34,9 +36,32 @@ public class start {
                 findEmployee();
                 break;
             case 7:
-                System.out.println("bye");
+                serialize();
+                break;
+            case 8:
+                hash();
+                break;
+            case 9:
+                //find id by hash
+                break;
+            case 10:
+                //find lastname by hash
+                break;
+            case 11:
+                //find id by serialized
+                break;
+            case 12:
+                //find last name by serialized
+                break;
+            case 13:
+                //find lastname by normal means
                 break;
         }
+    }
+    public static void serialize(){
+        IO serialize = new IO();
+        serialize.serializeAll();
+        run();
     }
     public static void findEmployee(){
         int id = ui.findID();

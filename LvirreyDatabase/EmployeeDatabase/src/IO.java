@@ -5,10 +5,7 @@
  * @packageName PACKAGE_NAME;
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileWriter;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
@@ -17,6 +14,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class IO {
+    public static void serializeAll(){
+        //File serialized = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
+        Employees employee = null;
+        int index = 1;
+        List<String> employeeFiles = returnAllDataLong();
+        for(String file : employeeFiles){
+            String[] structuredEmployee = structuredEmployee(file);
+            employee = new Employees(Integer.parseInt(structuredEmployee[0]),structuredEmployee[1],structuredEmployee[2],Integer.parseInt(structuredEmployee[3]));
+            try {
+                FileOutputStream findFile = new FileOutputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + index + ".ser");
+                ObjectOutputStream serializeFile = new ObjectOutputStream(findFile);
+                serializeFile.writeObject(employee);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            index++;
+        }
+    }
+    public static String[] structuredEmployee(String employee){
+        String[] structuredEmployee = employee.split(", ");
+        return structuredEmployee;
+    }
     /*--
     This part returns all data from text files from the Simple folder
     takes no parameters
@@ -28,6 +49,27 @@ public class IO {
         int index = 0;
         for (String file : folder.list()) {
             folderTemp = new File("LvirreyDatabase/EmployeeDatabase/people/simple/" + file);
+            Scanner read = null;
+            try {
+                read = new Scanner(folderTemp);
+                while (read.hasNextLine()) {
+                    String data = read.nextLine();
+                    files.set(index, data);
+                    index++;
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return files;
+    }
+    public static List<String> returnAllDataLong() {
+        File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long");
+        List<String> files = Arrays.asList(folder.list());
+        File folderTemp = null;
+        int index = 0;
+        for (String file : folder.list()) {
+            folderTemp = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + file);
             Scanner read = null;
             try {
                 read = new Scanner(folderTemp);

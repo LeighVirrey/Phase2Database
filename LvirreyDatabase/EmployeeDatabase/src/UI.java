@@ -23,7 +23,13 @@ public class UI {
                 4. Update an Employee from /long/
                 5. Delete an Employee from /long/
                 6. Find an Employee by ID
-                7. Exit
+                7. Serialize (If it already exists, this is useless)
+                8. Hash (if it already exists, then this is useless)
+                9. Index an employee using their ID (hash)
+                10. Index an employee using their Last Name (hash)
+                11 Find an employee by ID (Serialized)
+                12. Find an employee by Last Name (Serialized)
+                13. Find an employee by Last Name (normal)
                 Enter a number corresponding to the command
                 """);
     }
