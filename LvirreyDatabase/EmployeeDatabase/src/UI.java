@@ -47,6 +47,9 @@ public class UI {
         Line();
         return Console.getIntInput("What is the ID of the Employee?");
     }
+    public static String getLastName(){
+        return Console.getStringInput("What is the Last name of the Employee");
+    }
     public static void Line(){
         System.out.println("----------------------------------------------");
     }

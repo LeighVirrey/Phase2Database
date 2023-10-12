@@ -48,13 +48,13 @@ public class start {
                 //find all users with the same lastname by hash
                 break;
             case 11:
-                //find id by serialized
+                findIdSerialized();
                 break;
             case 12:
-                //find all users with the same last name by serialized
+                findLastNameSerialized();
                 break;
             case 13:
-                //find lastname by normal means
+                findLastName();
                 break;
             case 14:
                 System.out.println("bye");
@@ -64,6 +64,44 @@ public class start {
     public static void serialize(){
         IO serialize = new IO();
         serialize.serializeAll();
+        run();
+    }
+    public static void findIdSerialized(){
+        int id = ui.findID();
+        IO find = new IO();
+        Employees employee = find.findEmployeeSerial(id);
+        System.out.println(Arrays.toString(employee.employeeInfo()));
+        run();
+    }
+    public static void findLastNameSerialized(){
+        String lastNameUI = ui.getLastName();
+        IO serialLastName = new IO();
+        List<Employees> employeesList = serialLastName.findLastNameSerial(lastNameUI);
+        if (employeesList.size() != 0){
+            for (Employees employee: employeesList
+            ) {
+                System.out.println(Arrays.toString(employee.employeeInfo()));
+            }
+        }else{
+            System.out.println("No records of " + lastNameUI + " found");
+        }
+        run();
+    }
+    public static void findLastName(){
+        String lastNameUI = ui.getLastName();
+        IO lastNameFind = new IO();
+        List<String> employeesList = lastNameFind.findLastName(lastNameUI);
+        Employees employees;
+        if (employeesList.size() != 0) {
+            for (String employee: employeesList
+            ) {
+                String[] structuredEmployee = structuredEmployee(employee);
+                employees = new Employees(Integer.parseInt(structuredEmployee[0]),structuredEmployee[1],structuredEmployee[2],Integer.parseInt(structuredEmployee[3]));
+                System.out.println(Arrays.toString(employees.employeeInfo()));
+            }
+        }else{
+            System.out.println("No records of " + lastNameUI + " found");
+        }
         run();
     }
     public static void findEmployee(){

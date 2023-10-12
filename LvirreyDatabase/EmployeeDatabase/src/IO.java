@@ -17,13 +17,12 @@ public class IO {
     public static void serializeAll(){
         //File serialized = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
         Employees employee = null;
-        int index = 1;
         List<String> employeeFiles = returnAllDataLong();
         for(String file : employeeFiles){
             String[] structuredEmployee = structuredEmployee(file);
             employee = new Employees(Integer.parseInt(structuredEmployee[0]),structuredEmployee[1],structuredEmployee[2],Integer.parseInt(structuredEmployee[3]));
             try {
-                FileOutputStream findFile = new FileOutputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + index + ".ser");
+                FileOutputStream findFile = new FileOutputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + employee.getId() + ".ser");
                 ObjectOutputStream serializeFile = new ObjectOutputStream(findFile);
                 serializeFile.writeObject(employee);
             } catch (FileNotFoundException e) {
@@ -31,7 +30,6 @@ public class IO {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            index++;
         }
     }
     public static String[] structuredEmployee(String employee){
@@ -169,6 +167,72 @@ public class IO {
             throw new RuntimeException(e);
         }
         return employee;
+    }
+    public Employees findEmployeeSerial(int id){
+        FileInputStream file = null;
+        Employees employee;
+        try {
+            file = new FileInputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + id + ".ser");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ObjectInputStream read = new ObjectInputStream(file);
+            employee = (Employees)read.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return employee;
+    }
+    public List<Employees> findLastNameSerial(String lastName){
+        File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
+        FileInputStream file = null;
+        Employees employeeCheck;
+        List<Employees> employeesList = new ArrayList<>();
+        for (String employee: folder.list()
+             ) {
+            try{
+                file = new FileInputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + employee);
+            }catch (FileNotFoundException e){
+                System.out.println("error found, fix the pathing please");
+            }
+            try{
+                ObjectInputStream read = new ObjectInputStream(file);
+                employeeCheck = (Employees)read.readObject();
+                if(lastName.toLowerCase().equals(employeeCheck.getLastName().toLowerCase())){
+                    employeesList.add(employeeCheck);
+                }
+            }catch (IOException e){
+                System.out.println("What: " + e);
+            }catch (ClassNotFoundException c){
+                System.out.println("WHAT HAPPENED TO THE EMPLOYEES CLASS?!?!?!");
+            }
+        }
+        return employeesList;
+    }
+    public List<String> findLastName(String lastName){
+        File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long");
+        List<String> files = new ArrayList<>();
+        File folderTemp = null;
+        for (String file : folder.list()) {
+            folderTemp = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + file);
+            Scanner read = null;
+            try {
+                read = new Scanner(folderTemp);
+                while (read.hasNextLine()) {
+                    String data = read.nextLine();
+                    String[] dataArray = data.split(", ");
+                    if(dataArray[2].toLowerCase().equals(lastName.toLowerCase())) {
+                        files.add(data);
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return files;
     }
 }
 
