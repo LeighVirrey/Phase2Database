@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Objects.hash;
 
@@ -13,6 +10,8 @@ import static java.util.Objects.hash;
  */
 
 public class start {
+    private static HashMap<Integer, Employees> idHash = new HashMap<>();
+    private static HashMap<Integer, List<Employees>> lastNameHash = new HashMap<>();
     public static UI ui = new UI();
     public static void run() {
         int menuOptions = ui.Menu();
@@ -42,10 +41,10 @@ public class start {
                 hash();
                 break;
             case 9:
-                //find id by hash
+                findIdByHash();
                 break;
             case 10:
-                //find all users with the same lastname by hash
+                findAllByLastNameHash();
                 break;
             case 11:
                 //find id by serialized
@@ -143,5 +142,59 @@ public class start {
     public static String[] structuredEmployee(String employee){
         String[] structuredEmployee = employee.split(", ");
         return structuredEmployee;
+    }
+    public static void hash() {
+        List<String> employeeData = getEmployeeData();
+
+        for (String employeeInfo : employeeData) {
+            String[] structuredEmployee = structuredEmployee(employeeInfo);
+            Employees employee = new Employees(Integer.parseInt(structuredEmployee[0]), structuredEmployee[1], structuredEmployee[2], Integer.parseInt(structuredEmployee[3]));
+
+            // Create a hash for ID and store the employee
+            idHash.put(employee.getId(), employee);
+
+            // Create a hash for Last Name and store the employee
+            int lastNameHashKey = employee.getLastName().hashCode();
+            if (lastNameHash.containsKey(lastNameHashKey)) {
+                lastNameHash.get(lastNameHashKey).add(employee);
+            } else {
+                List<Employees> employeesWithSameLastName = new ArrayList<>();
+                employeesWithSameLastName.add(employee);
+                lastNameHash.put(lastNameHashKey, employeesWithSameLastName);
+            }
+        }
+
+        System.out.println("Employees hashed successfully.");
+        run();
+    }
+
+    public static void findIdByHash() {
+        int id = ui.findID();
+
+        if (idHash.containsKey(id)) {
+            Employees employee = idHash.get(id);
+            System.out.println("Employee found by ID: " + employee);
+        } else {
+            System.out.println("Employee not found by ID: " + id);
+        }
+
+        run();
+    }
+
+    public static void findAllByLastNameHash() {
+        String lastName = IO.findEmployee(ui.findID()).toString();
+        int lastNameHashKey = lastName.hashCode();
+
+        if (lastNameHash.containsKey(lastNameHashKey)) {
+            List<Employees> employeesWithSameLastName = lastNameHash.get(lastNameHashKey);
+            System.out.println("Employees with the same last name (" + lastName + "):");
+            for (Employees employee : employeesWithSameLastName) {
+                System.out.println(employee);
+            }
+        } else {
+            System.out.println("No employees found with the last name: " + lastName);
+        }
+
+        run();
     }
 }

@@ -156,7 +156,7 @@ public class IO {
         return updatedData;
     }
 
-    public List<String> findEmployee(int id){
+    public static List<String> findEmployee(int id){
         File file = new File ("LvirreyDatabase/EmployeeDatabase/people/long/" + id + ".txt");
         List<String> employee = new ArrayList<>();
         try {
