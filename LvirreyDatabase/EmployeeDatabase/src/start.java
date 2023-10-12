@@ -1,6 +1,7 @@
 import java.util.*;
 
 import static java.util.Objects.hash;
+import org.apache.commons.lang3.time.StopWatch;
 
 /**
  * @author lvirrey
@@ -10,6 +11,7 @@ import static java.util.Objects.hash;
  */
 
 public class start {
+    private static StopWatch stopWatch = new StopWatch();
     private static HashMap<Integer, Employees> idHash = new HashMap<>();
     private static HashMap<Integer, List<Employees>> lastNameHash = new HashMap<>();
     public static UI ui = new UI();
@@ -182,6 +184,7 @@ public class start {
         return structuredEmployee;
     }
     public static void hash() {
+        stopWatch.start();
         List<String> employeeData = getEmployeeData();
 
         for (String employeeInfo : employeeData) {
@@ -201,6 +204,9 @@ public class start {
                 lastNameHash.put(lastNameHashKey, employeesWithSameLastName);
             }
         }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
 
         System.out.println("Employees hashed successfully.");
         run();
@@ -208,19 +214,22 @@ public class start {
 
     public static void findIdByHash() {
         int id = ui.findID();
-
+        stopWatch.start();
         if (idHash.containsKey(id)) {
             Employees employee = idHash.get(id);
             System.out.println("Employee found by ID: " + employee);
         } else {
             System.out.println("Employee not found by ID: " + id);
         }
-
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
         run();
     }
 
     public static void findAllByLastNameHash() {
         String lastName = IO.findEmployee(ui.findID()).toString();
+        stopWatch.start();
         int lastNameHashKey = lastName.hashCode();
 
         if (lastNameHash.containsKey(lastNameHashKey)) {
@@ -232,7 +241,9 @@ public class start {
         } else {
             System.out.println("No employees found with the last name: " + lastName);
         }
-
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
         run();
     }
 }

@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.lang3.time.StopWatch;
 
 public class IO {
+    private static StopWatch stopWatch = new StopWatch();
     public static void serializeAll(){
+        stopWatch.start();
         //File serialized = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
         Employees employee = null;
         List<String> employeeFiles = returnAllDataLong();
@@ -31,6 +34,9 @@ public class IO {
                 throw new RuntimeException(e);
             }
         }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
     }
     public static String[] structuredEmployee(String employee){
         String[] structuredEmployee = employee.split(", ");
@@ -169,6 +175,7 @@ public class IO {
         return employee;
     }
     public Employees findEmployeeSerial(int id){
+        stopWatch.start();
         FileInputStream file = null;
         Employees employee;
         try {
@@ -184,9 +191,13 @@ public class IO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
         return employee;
     }
     public List<Employees> findLastNameSerial(String lastName){
+        stopWatch.start();
         File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
         FileInputStream file = null;
         Employees employeeCheck;
@@ -210,9 +221,13 @@ public class IO {
                 System.out.println("WHAT HAPPENED TO THE EMPLOYEES CLASS?!?!?!");
             }
         }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
         return employeesList;
     }
     public List<String> findLastName(String lastName){
+        stopWatch.start();
         File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long");
         List<String> files = new ArrayList<>();
         File folderTemp = null;
@@ -232,6 +247,9 @@ public class IO {
                 throw new RuntimeException(e);
             }
         }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
         return files;
     }
 }
