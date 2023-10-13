@@ -226,6 +226,38 @@ public class IO {
         stopWatch.reset();
         return employeesList;
     }
+    public Employees findLastNameSerialFirst(String lastName){
+        stopWatch.start();
+        File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long serialized");
+        FileInputStream file = null;
+        Employees employeeCheck;
+        for (String employees: folder.list()
+        ) {
+            try{
+                file = new FileInputStream("LvirreyDatabase/EmployeeDatabase/people/long serialized/" + employees);
+            }catch (FileNotFoundException e){
+                System.out.println("error found, fix the pathing please");
+            }
+            try{
+                ObjectInputStream read = new ObjectInputStream(file);
+                employeeCheck = (Employees)read.readObject();
+                if(lastName.toLowerCase().equals(employeeCheck.getLastName().toLowerCase())){
+                    stopWatch.stop();
+                    System.out.println("Load Time: " + stopWatch.getTime());
+                    stopWatch.reset();
+                    return employeeCheck;
+                }
+            }catch (IOException e){
+                System.out.println("What: " + e);
+            }catch (ClassNotFoundException c){
+                System.out.println("WHAT HAPPENED TO THE EMPLOYEES CLASS?!?!?!");
+            }
+        }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
+        return null;
+    }
     public List<String> findLastName(String lastName){
         stopWatch.start();
         File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long");
@@ -251,6 +283,34 @@ public class IO {
         System.out.println("Load Time: " + stopWatch.getTime());
         stopWatch.reset();
         return files;
+    }
+    public List<String> findLastNameFirst(String lastName){
+        stopWatch.start();
+        File folder = new File("LvirreyDatabase/EmployeeDatabase/people/long");
+        File folderTemp = null;
+        for (String file : folder.list()) {
+            folderTemp = new File("LvirreyDatabase/EmployeeDatabase/people/long/" + file);
+            Scanner read = null;
+            try {
+                read = new Scanner(folderTemp);
+                while (read.hasNextLine()) {
+                    String data = read.nextLine();
+                    List<String> dataArray = Arrays.asList(data.split(", "));
+                    if(dataArray.get(2).toLowerCase().equals(lastName.toLowerCase())) {
+                        stopWatch.stop();
+                        System.out.println("Load Time: " + stopWatch.getTime());
+                        stopWatch.reset();
+                        return dataArray;
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        stopWatch.stop();
+        System.out.println("Load Time: " + stopWatch.getTime());
+        stopWatch.reset();
+        return null;
     }
 }
 

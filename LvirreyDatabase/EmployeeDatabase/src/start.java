@@ -55,10 +55,16 @@ public class start {
                 findLastNameSerialized();
                 break;
             case 13:
-                findLastName();
+                findLastNameSerializedFirst();
                 break;
             case 14:
-                System.out.println("bye");
+                findLastName();
+                break;
+            case 15:
+                findLastNameFirst();
+                break;
+            case 16:
+                System.out.println("Bye");
                 break;
         }
     }
@@ -88,6 +94,17 @@ public class start {
         }
         run();
     }
+    public static void findLastNameSerializedFirst(){
+        String lastNameUI = ui.getLastName();
+        IO serialLastName = new IO();
+        Employees employee = serialLastName.findLastNameSerialFirst(lastNameUI);
+        if (employee != null){
+            System.out.println(Arrays.toString(employee.employeeInfo()));
+        }else{
+            System.out.println("No records of " + lastNameUI + " found");
+        }
+        run();
+    }
     public static void findLastName(){
         String lastNameUI = ui.getLastName();
         IO lastNameFind = new IO();
@@ -100,6 +117,18 @@ public class start {
                 employees = new Employees(Integer.parseInt(structuredEmployee[0]),structuredEmployee[1],structuredEmployee[2],Integer.parseInt(structuredEmployee[3]));
                 System.out.println(Arrays.toString(employees.employeeInfo()));
             }
+        }else{
+            System.out.println("No records of " + lastNameUI + " found");
+        }
+        run();
+    }
+    public static void findLastNameFirst(){
+        String lastNameUI = ui.getLastName();
+        IO lastNameFind = new IO();
+        List<String> employeesList = lastNameFind.findLastNameFirst(lastNameUI);
+        if(employeesList != null){
+            Employees employees = new Employees(Integer.parseInt(employeesList.get(0)), employeesList.get(1),employeesList.get(2), Integer.parseInt(employeesList.get(3)));
+            System.out.println(Arrays.toString(employees.employeeInfo()));
         }else{
             System.out.println("No records of " + lastNameUI + " found");
         }

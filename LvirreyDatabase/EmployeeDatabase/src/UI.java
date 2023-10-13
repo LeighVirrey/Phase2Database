@@ -28,9 +28,11 @@ public class UI {
                 9. Index an employee using their ID (hash)
                 10. Index an employee using their Last Name (hash)
                 11 Find an employee by ID (Serialized)
-                12. Find an employee by Last Name (Serialized)
-                13. Find an employee by Last Name (normal)
-                14. Exit
+                12. Find an employee by Last Name ALL(Serialized)
+                13. Find an employee by Last Name FIRST (Serialized)
+                14. Find an employee by Last Name ALL(normal)
+                15. Find an employee by Last Name FIRST(normal)
+                16. Exit
                 Enter a number corresponding to the command
                 """);
     }
